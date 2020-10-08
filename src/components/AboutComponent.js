@@ -7,14 +7,15 @@ import { Link } from 'react-router-dom';
 const RenderLeader= ({leader}) =>{
      return(
          <Media>
-             <Media left>
+             <Media left className='col-2 mt-20'>
                 <img src={leader.image} className="mr-3 d-flex align-self-center img-thumbnail" />
              </Media>
-            <Media body right>
+            <Media body right className='col-10'>
                 <Media heading>
                 {leader.name}
                 </Media>
-                {leader.designation} <br/> {leader.description}
+                    <p> {leader.designation} </p>
+                    <p> {leader.description} </p> 
             </Media>
          </Media>
      );
