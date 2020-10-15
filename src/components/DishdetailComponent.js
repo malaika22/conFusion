@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody,CardTitle , Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import CommentForm from './CommentForm';
 
 
 
@@ -25,6 +26,7 @@ import {Link} from 'react-router-dom';
                                return(
                                <li key={comment.id} className="list-group-item">{comment.comment}<br></br> -- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</li>
                                );
+                               
                            })}
                         </ul>
                     )
@@ -54,6 +56,7 @@ import {Link} from 'react-router-dom';
                             <div className="col-12 col-md-5 m-1">
                                 <h4>Comments</h4>
                                 <RenderComments comments={props.comments} />
+                                <CommentForm />
                             </div>
                             </div>
                         </div>
