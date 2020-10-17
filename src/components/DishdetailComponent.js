@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Card, CardImg, CardBody, CardText, CardTitle, Breadcrumb, BreadcrumbItem,Label, Button, Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {Link} from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 
 
@@ -117,7 +119,7 @@ const minLength = (len) => (val) => val && val.length >= len;
         const RenderDish = ({selectedDish}) => {
                     return(
                         <Card>
-                            <CardImg top src={selectedDish.image} alt={selectedDish.name} />
+                            <CardImg top src={baseUrl + selectedDish.image} alt={selectedDish.name} />
                             <CardBody>
                               <CardTitle>{selectedDish.name}</CardTitle>
                               <CardText>{selectedDish.description}</CardText>
@@ -152,36 +154,55 @@ const minLength = (len) => (val) => val && val.length >= len;
 
 
             const DishDetail= (props) =>{
-                if(props.selectedDish!=null){
-                    return(
-                         <div className="container">
-                             <div className="row">
-                                 <Breadcrumb>
-                                    <BreadcrumbItem> <Link to='/menu'>Menu</Link> </BreadcrumbItem>
-                                    <BreadcrumbItem active> {props.selectedDish.name}</BreadcrumbItem>
-                                 </Breadcrumb>
-                             </div>
-                             <div className="row">
-                            <div className="col-12 col-md-5 m-1">
-                                <RenderDish selectedDish={props.selectedDish} />
+                    if (props.isLoading) {
+                        return(
+                            <div className="container">
+                                <div className="row">            
+                                    <Loading />
+                                </div>
                             </div>
-                            <div className="col-12 col-md-5 m-1">
-                                <h4>Comments</h4>
-                                <RenderComments comments={props.comments}
-                                    addComment={props.addComment}
-                                    dishId={props.selectedDish.id}
-                                />
-                               
+                        );
+                    }
+                    else if (props.errMess) {
+                        return(
+                            <div className="container">
+                                <div className="row">            
+                                    <h4>{props.errMess}</h4>
+                                </div>
                             </div>
+                        );
+                    }
+               
+                    else if(props.selectedDish!=null){
+                        return(
+                            <div className="container">
+                                <div className="row">
+                                    <Breadcrumb>
+                                        <BreadcrumbItem> <Link to='/menu'>Menu</Link> </BreadcrumbItem>
+                                        <BreadcrumbItem active> {props.selectedDish.name}</BreadcrumbItem>
+                                    </Breadcrumb>
+                                </div>
+                                <div className="row">
+                                <div className="col-12 col-md-5 m-1">
+                                    <RenderDish selectedDish={props.selectedDish} />
+                                </div>
+                                <div className="col-12 col-md-5 m-1">
+                                    <h4>Comments</h4>
+                                    <RenderComments comments={props.comments}
+                                        addComment={props.addComment}
+                                        dishId={props.selectedDish.id}
+                                    />
+                                
+                                </div>
+                                </div>
                             </div>
-                        </div>
-                       
-                    );
-                }else{
-                    return(
-                        <div></div>
-                    );
-                }
+                        
+                        );
+                    }else{
+                        return(
+                            <div></div>
+                        );
+                    }
             
 
             }
