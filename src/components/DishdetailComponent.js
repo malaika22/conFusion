@@ -3,7 +3,6 @@ import {Card, CardImg, CardBody, CardText, CardTitle, Breadcrumb, BreadcrumbItem
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {Link} from 'react-router-dom';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../shared/baseUrl';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
@@ -28,7 +27,7 @@ const minLength = (len) => (val) => val && val.length >= len;
                 }
 
                 handleSubmit(values) {
-                    this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+                    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
                 }
 
             render() {
@@ -124,7 +123,7 @@ const minLength = (len) => (val) => val && val.length >= len;
                             exitTransform: 'scale(0.5) translateY(-50%)'
                         }}>
                             <Card>
-                                <CardImg top src={baseUrl + selectedDish.image} alt={selectedDish.name} />
+                                <CardImg top src={selectedDish.image} alt={selectedDish.name} />
                                 <CardBody>
                                     <CardTitle>{selectedDish.name}</CardTitle>
                                     <CardText>{selectedDish.description}</CardText>
@@ -134,7 +133,7 @@ const minLength = (len) => (val) => val && val.length >= len;
                     );
                  }
 
-        function RenderComments({comments, postComment, dishId}) {
+        function RenderComments({comments, addComment, dishId}) {
                 if(comments!=null){
                    
                     return(
@@ -153,7 +152,7 @@ const minLength = (len) => (val) => val && val.length >= len;
                             })}
                         </Stagger>
                         </ul>
-                        <CommentForm dishId={dishId} postComment={postComment} />
+                        <CommentForm dishId={dishId} addComment={addComment} />
                         </div>   
                     )
                 }else{
@@ -201,7 +200,7 @@ const minLength = (len) => (val) => val && val.length >= len;
                                 <div className="col-12 col-md-5 m-1">
                                     <h4>Comments</h4>
                                     <RenderComments comments={props.comments}
-                                        postComment={props.postComment}
+                                        addComment={props.addComment}
                                         dishId={props.selectedDish.id}
                                     />
                                 
