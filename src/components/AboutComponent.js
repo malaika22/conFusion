@@ -5,7 +5,7 @@ import { Fade, Stagger } from 'react-animation-components';
 import {Loading} from './LoadingComponent'
 
 
-
+// About component
 const RenderLeader= ({leader, isLoading, errMess}) =>{
     if (isLoading) {
         return(
